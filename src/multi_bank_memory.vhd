@@ -20,9 +20,6 @@ entity MultiBankMemory  is
 end entity MultiBankMemory;
 
 architecture RTL of MultiBankMemory is 
-    signal bank_select : std_ulogic_vector(1 downto 0) := (others => '0');
-    signal line_address : std_ulogic_vector(9 downto 0) := (others => '0');
-    signal temp_read_data : std_ulogic_vector(MEM_WIDTH-1 downto 0) := (others => '0');
     -- BANK0
     signal write_en_0 : std_ulogic := '0';
     signal read_en_0 : std_ulogic := '0';
@@ -55,7 +52,7 @@ begin
             i_nrst => i_nrst,
             i_write_enable => write_en_0,
             i_read_enable => read_en_0,
-            i_address => line_address,
+            i_address => i_address(9 downto 0),
             i_write_data => i_write_data,
             o_read_data => read_data_0,
             o_address_error => address_error_0
@@ -71,7 +68,7 @@ begin
             i_nrst => i_nrst,
             i_write_enable => write_en_1,
             i_read_enable => read_en_1,
-            i_address => line_address,
+            i_address => i_address(9 downto 0),
             i_write_data => i_write_data,
             o_read_data => read_data_1,
             o_address_error => address_error_1
@@ -87,7 +84,7 @@ begin
             i_nrst => i_nrst,
             i_write_enable => write_en_2,
             i_read_enable => read_en_2,
-            i_address => line_address,
+            i_address => i_address(9 downto 0),
             i_write_data => i_write_data,
             o_read_data => read_data_2,
             o_address_error => address_error_2
@@ -103,7 +100,7 @@ begin
             i_nrst => i_nrst,
             i_write_enable => write_en_3,
             i_read_enable => read_en_3,
-            i_address => line_address,
+            i_address => i_address(9 downto 0),
             i_write_data => i_write_data,
             o_read_data => read_data_3,
             o_address_error => address_error_3
@@ -115,12 +112,10 @@ begin
             if(i_nrst = '0') then 
                 bank_select <= "00";
                 line_address <= (others => '0');
-                --o_read_data <= (others => '0');
+                o_read_data <= (others => '0');
                 o_address_error <= '0';
             else 
-                bank_select <= i_address(11 downto 10);
-                line_address <= i_address(9 downto 0);
-                case (bank_select) is 
+                case (i_address(11 downto 10)) is 
                     when "00" => 
                         write_en_0 <= i_write_enable;
                         read_en_0 <= i_read_enable;
@@ -130,7 +125,7 @@ begin
                         read_en_2 <= '0';
                         write_en_3 <= '0';
                         read_en_3 <= '0';
-                        temp_read_data <= read_data_0;
+                        o_read_data <= read_data_0;
                         o_address_error <= address_error_0;
                     when "01" =>
                         write_en_1 <= i_write_enable;
@@ -141,7 +136,7 @@ begin
                         read_en_2 <= '0';
                         write_en_3 <= '0';
                         read_en_3 <= '0';
-                        temp_read_data <= read_data_1;
+                        o_read_data <= read_data_1;
                         o_address_error <= address_error_1;
                     when "10" => 
                         write_en_2 <= i_write_enable;
@@ -152,7 +147,7 @@ begin
                         read_en_1 <= '0';
                         write_en_3 <= '0';
                         read_en_3 <= '0';
-                        temp_read_data <= read_data_2;
+                        o_read_data <= read_data_2;
                         o_address_error <= address_error_2;
                     when "11" => 
                         write_en_0 <= '0';
@@ -163,7 +158,7 @@ begin
                         read_en_2 <= '0';
                         write_en_3 <= i_write_enable;
                         read_en_3 <= i_read_enable;
-                        temp_read_data <= read_data_3;
+                        o_read_data <= read_data_3;
                         o_address_error <= address_error_3;
                     when others => 
                         write_en_0 <= '0';
@@ -174,11 +169,10 @@ begin
                         read_en_2 <= '0';
                         write_en_3 <= '0';
                         read_en_3 <= '0';
-                        temp_read_data <= (others => '0');
+                        o_read_data <= (others => '0');
                         o_address_error <= '1';
                 end case;
             end if;
         end if;
     end process;
-    o_read_data <= temp_read_data;
 end architecture RTL;
