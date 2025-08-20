@@ -11,13 +11,14 @@ mkdir -p $WORK_DIR
 ghdl -i --workdir=$WORK_DIR ../src/single_bank_memory.vhd
 ghdl -i --workdir=$WORK_DIR ../src/multi_bank_memory.vhd
 
+#ghdl -i --workdir=$WORK_DIR ./tb_single_bank_memory.vhd
 ghdl -i --workdir=$WORK_DIR ./tb_multi_bank_memory.vhd
 
 # building simulation files
 ghdl -m --workdir=$WORK_DIR tb
 
 # running the simulation
-ghdl -r --workdir=$WORK_DIR tb --wave=$WORK_DIR/$WAVE_FILE --stop-time=25ms
+ghdl -r --workdir=$WORK_DIR tb --wave=$WORK_DIR/$WAVE_FILE --stop-time=1ms
 
 # open gtkwave with project with new waveform if project exists, if not then just open the waveform in new project
 if [ -f $WORK_DIR/$GTKPROJ_FILE ]; then
