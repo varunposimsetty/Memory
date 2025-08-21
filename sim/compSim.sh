@@ -3,6 +3,7 @@
 WORK_DIR=work
 WAVE_FILE=result.ghw
 GTKPROJ_FILE=result.gtkw
+VCD_FILE=result.vcd
 
 # create work dir if it does not exist
 mkdir -p $WORK_DIR
@@ -18,7 +19,12 @@ ghdl -i --workdir=$WORK_DIR ./tb_multi_bank_memory.vhd
 ghdl -m --workdir=$WORK_DIR tb
 
 # running the simulation
-ghdl -r --workdir=$WORK_DIR tb --wave=$WORK_DIR/$WAVE_FILE --stop-time=1ms
+ghdl -r --workdir=$WORK_DIR tb --vcd=$WORK_DIR/$VCD_FILE --stop-time=1ms
+
+#python3 ./vcd2saif.py "$WORK_DIR/$VCD_FILE" "$WORK_DIR/${VCD_FILE%.vcd}.saif"
+
+# running the simulation
+#ghdl -r --workdir=$WORK_DIR tb_multi_bank_memory --wave=$WORK_DIR/result.vcd --stop-time=1ms
 
 # open gtkwave with project with new waveform if project exists, if not then just open the waveform in new project
 if [ -f $WORK_DIR/$GTKPROJ_FILE ]; then

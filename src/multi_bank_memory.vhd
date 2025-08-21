@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -36,81 +35,32 @@ architecture RTL of MultiBankMemory is
 
     signal sel_d : std_ulogic_vector(1 downto 0);
 
-    signal clk_0 : std_ulogic := '0';
-    signal clk_1 : std_ulogic := '0';
-    signal clk_2 : std_ulogic := '0';
-    signal clk_3 : std_ulogic := '0';
+    type t_clk_array is array(0 to BANK_COUNT-1) of std_ulogic;
+    signal clk_array : t_clk_array := (others => '0');
 
 begin
 
-    clk_0 <= i_clk and control_signals(0).clk_en and i_state(1);
-    clk_1 <= i_clk and control_signals(1).clk_en and i_state(1);
-    clk_2 <= i_clk and control_signals(2).clk_en and i_state(1);
-    clk_3 <= i_clk and control_signals(3).clk_en and i_state(1);
+    gen_clocks: for i in 0 to BANK_COUNT-1 generate
+        clk_array(i) <= i_clk and control_signals(i).clk_en and i_state(1);
+    end generate gen_clocks;
 
-    BANK_0 : entity work.SingleBankMemory(RTL)
-        generic map (
-            MEM_WIDTH => 32,
-            MEM_DEPTH => 1024
-        )
-        port map (
-            i_clk => clk_0,
-            i_nrst => i_nrst,
-            i_state => i_state(0),
-            i_write_enable => control_signals(0).write_en,
-            i_read_enable => control_signals(0).read_en,
-            i_address => i_address(9 downto 0),
-            i_write_data => i_write_data,
-            o_read_data => bank_read_data(0)
-        );
-
-    BANK_1 : entity work.SingleBankMemory(RTL)
-        generic map (
-            MEM_WIDTH => 32,
-            MEM_DEPTH => 1024
-        )
-        port map (
-            i_clk => clk_1,
-            i_nrst => i_nrst,
-            i_state => i_state(0),
-            i_write_enable => control_signals(1).write_en,
-            i_read_enable => control_signals(1).read_en,
-            i_address => i_address(9 downto 0),
-            i_write_data => i_write_data,
-            o_read_data => bank_read_data(1)
-        );
-
-    BANK_2 : entity work.SingleBankMemory(RTL)
-        generic map (
-            MEM_WIDTH => 32,
-            MEM_DEPTH => 1024
-        )
-        port map (
-            i_clk => clk_2,
-            i_nrst => i_nrst,
-            i_state => i_state(0),
-            i_write_enable => control_signals(2).write_en,
-            i_read_enable => control_signals(2).read_en,
-            i_address => i_address(9 downto 0),
-            i_write_data => i_write_data,
-            o_read_data => bank_read_data(2)
-        );
-
-    BANK_3 : entity work.SingleBankMemory(RTL)
-        generic map (
-            MEM_WIDTH => 32,
-            MEM_DEPTH => 1024
-        )
-        port map (
-            i_clk => clk_3,
-            i_nrst => i_nrst,
-            i_state => i_state(0),
-            i_write_enable => control_signals(3).write_en,
-            i_read_enable => control_signals(3).read_en,
-            i_address => i_address(9 downto 0),
-            i_write_data => i_write_data,
-            o_read_data => bank_read_data(3)
-        );
+    gen_banks: for i in 0 to BANK_COUNT-1 generate
+        BANK : entity work.SingleBankMemory(RTL)
+            generic map (
+                MEM_WIDTH => MEM_WIDTH,
+                MEM_DEPTH => MEM_DEPTH
+            )
+            port map (
+                i_clk => clk_array(i),
+                i_nrst => i_nrst,
+                i_state => i_state(0),
+                i_write_enable => control_signals(i).write_en,
+                i_read_enable => control_signals(i).read_en,
+                i_address => i_address(9 downto 0),
+                i_write_data => i_write_data,
+                o_read_data => bank_read_data(i)
+            );
+    end generate gen_banks;
 
     process(i_clk) 
     begin 

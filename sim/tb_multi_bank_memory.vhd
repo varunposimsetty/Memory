@@ -138,6 +138,7 @@ begin
         state <= "00"; write_enable <= '0'; read_enable <= '0';
         address <= "010000000100"; wait for clk_period;
 
+        wait for 100 ns;
         wait;
     end process;
 end architecture behavior;
