@@ -4,6 +4,7 @@ WORK_DIR=work
 WAVE_FILE=result.ghw
 GTKPROJ_FILE=result.gtkw
 VCD_FILE=result.vcd
+SAIF_FILE=result.saif
 
 # create work dir if it does not exist
 mkdir -p $WORK_DIR
@@ -20,6 +21,8 @@ ghdl -m --workdir=$WORK_DIR tb
 
 # running the simulation
 ghdl -r --workdir="$WORK_DIR" tb --wave="$WORK_DIR/$WAVE_FILE" --vcd="$WORK_DIR/$VCD_FILE" --stop-time=1ms
+
+"$PY" ./vcd2saif.py -i "$WORK_DIR/$VCD_FILE" -d "$WORK_DIR/$SAIF_FILE"
 
 #python3 ./vcd2saif.py "$WORK_DIR/$VCD_FILE" "$WORK_DIR/${VCD_FILE%.vcd}.saif"
 
