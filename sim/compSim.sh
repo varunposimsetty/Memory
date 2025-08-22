@@ -12,8 +12,8 @@ mkdir -p $WORK_DIR
 ghdl -i --workdir=$WORK_DIR ../src/single_bank_memory.vhd
 ghdl -i --workdir=$WORK_DIR ../src/multi_bank_memory.vhd
 
-ghdl -i --workdir=$WORK_DIR ./tb_single_bank_memory.vhd
-#ghdl -i --workdir=$WORK_DIR ./tb_multi_bank_memory.vhd
+#ghdl -i --workdir=$WORK_DIR ./tb_single_bank_memory.vhd
+ghdl -i --workdir=$WORK_DIR ./tb_multi_bank_memory.vhd
 
 # building simulation files
 ghdl -m --workdir=$WORK_DIR tb
