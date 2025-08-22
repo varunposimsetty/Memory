@@ -12,14 +12,14 @@ mkdir -p $WORK_DIR
 ghdl -i --workdir=$WORK_DIR ../src/single_bank_memory.vhd
 ghdl -i --workdir=$WORK_DIR ../src/multi_bank_memory.vhd
 
-#ghdl -i --workdir=$WORK_DIR ./tb_single_bank_memory.vhd
-ghdl -i --workdir=$WORK_DIR ./tb_multi_bank_memory.vhd
+ghdl -i --workdir=$WORK_DIR ./tb_single_bank_memory.vhd
+#ghdl -i --workdir=$WORK_DIR ./tb_multi_bank_memory.vhd
 
 # building simulation files
 ghdl -m --workdir=$WORK_DIR tb
 
 # running the simulation
-ghdl -r --workdir=$WORK_DIR tb --vcd=$WORK_DIR/$VCD_FILE --stop-time=1ms
+ghdl -r --workdir="$WORK_DIR" tb --wave="$WORK_DIR/$WAVE_FILE" --vcd="$WORK_DIR/$VCD_FILE" --stop-time=1ms
 
 #python3 ./vcd2saif.py "$WORK_DIR/$VCD_FILE" "$WORK_DIR/${VCD_FILE%.vcd}.saif"
 

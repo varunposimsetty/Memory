@@ -8,6 +8,7 @@ end entity tb;
 architecture behavior of tb is
     signal clk : std_ulogic := '0';
     signal nrst : std_ulogic := '0';
+    signal clk_enable : std_ulogic := '0';
     signal state : std_ulogic := '0';
     signal write_enable : std_ulogic := '0';
     signal read_enable : std_ulogic := '0';
@@ -25,6 +26,7 @@ architecture behavior of tb is
         port (
             i_clk : in std_ulogic;
             i_nrst : in std_ulogic;
+            i_clk_enable : in std_ulogic;
             i_state : in std_ulogic;
             i_write_enable : in std_ulogic;
             i_read_enable : in std_ulogic;
@@ -39,6 +41,7 @@ begin
         port map (
             i_clk => clk,
             i_nrst => nrst,
+            i_clk_enable => clk_enable,
             i_state => state,
             i_write_enable => write_enable,
             i_read_enable => read_enable,
@@ -62,7 +65,7 @@ begin
         nrst <= '0'; 
         wait for clk_period * 2; 
         nrst <= '1'; 
-        
+        clk_enable <= '1';
         state <= '0'; 
         address <= "0000000000"; 
         read_enable <= '1'; 
@@ -123,6 +126,7 @@ begin
         read_enable <= '0'; 
         address <= "0000000000"; 
         wait for clk_period; 
+        clk_enable <= '0';
         
         read_enable <= '1'; 
         state <= '0'; 

@@ -1,23 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
-[*] Thu Aug 21 09:08:09 2025
+[*] Fri Aug 22 07:11:34 2025
 [*]
 [dumpfile] "C:\Users\Posimsetty\Desktop\Memory\sim\work\result.ghw"
-[dumpfile_mtime] "Thu Aug 21 07:25:13 2025"
-[dumpfile_size] 1913236
+[dumpfile_mtime] "Fri Aug 22 07:08:40 2025"
+[dumpfile_size] 1913124
 [savefile] "C:\Users\Posimsetty\Desktop\Memory\sim\work\result.gtkw"
 [timestart] 0
 [size] 2560 1369
-[pos] 2503 -9
-*-24.582924 1300000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -9 -9
+*-24.582924 22200000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.tb.
 [treeopen] top.tb.uut.
 [treeopen] top.tb.uut.gen_banks[0].bank.
-[treeopen] top.tb.uut.gen_banks[1].bank.
 [treeopen] top.tb.uut.gen_banks[3].
 [treeopen] top.tb.uut.gen_banks[3].bank.
-[treeopen] top.tb.uut.gen_banks[3].bank.memoryarray.
 [sst_width] 278
 [signals_width] 286
 [sst_expanded] 1
@@ -39,7 +37,7 @@ top.tb.uut.i_read_enable
 @200
 -Bank 0
 @28
-top.tb.uut.control_signals[0].clk_en
+top.tb.uut.gen_banks[0].bank.i_clk_enable
 top.tb.uut.control_signals[0].write_en
 top.tb.uut.control_signals[0].read_en
 @22
@@ -51,7 +49,7 @@ top.tb.uut.control_signals[0].read_en
 @200
 -Bank 1
 @28
-top.tb.uut.control_signals[1].clk_en
+top.tb.uut.gen_banks[1].bank.i_clk_enable
 top.tb.uut.control_signals[1].write_en
 top.tb.uut.control_signals[1].read_en
 @22
@@ -63,7 +61,7 @@ top.tb.uut.control_signals[1].read_en
 @200
 -Bank 2
 @28
-top.tb.uut.control_signals[2].clk_en
+top.tb.uut.gen_banks[2].bank.i_clk_enable
 top.tb.uut.control_signals[2].write_en
 top.tb.uut.control_signals[2].read_en
 @22
@@ -74,8 +72,9 @@ top.tb.uut.control_signals[2].read_en
 #{top.tb.uut.bank_read_data[2][31:0]} top.tb.uut.bank_read_data[2][31] top.tb.uut.bank_read_data[2][30] top.tb.uut.bank_read_data[2][29] top.tb.uut.bank_read_data[2][28] top.tb.uut.bank_read_data[2][27] top.tb.uut.bank_read_data[2][26] top.tb.uut.bank_read_data[2][25] top.tb.uut.bank_read_data[2][24] top.tb.uut.bank_read_data[2][23] top.tb.uut.bank_read_data[2][22] top.tb.uut.bank_read_data[2][21] top.tb.uut.bank_read_data[2][20] top.tb.uut.bank_read_data[2][19] top.tb.uut.bank_read_data[2][18] top.tb.uut.bank_read_data[2][17] top.tb.uut.bank_read_data[2][16] top.tb.uut.bank_read_data[2][15] top.tb.uut.bank_read_data[2][14] top.tb.uut.bank_read_data[2][13] top.tb.uut.bank_read_data[2][12] top.tb.uut.bank_read_data[2][11] top.tb.uut.bank_read_data[2][10] top.tb.uut.bank_read_data[2][9] top.tb.uut.bank_read_data[2][8] top.tb.uut.bank_read_data[2][7] top.tb.uut.bank_read_data[2][6] top.tb.uut.bank_read_data[2][5] top.tb.uut.bank_read_data[2][4] top.tb.uut.bank_read_data[2][3] top.tb.uut.bank_read_data[2][2] top.tb.uut.bank_read_data[2][1] top.tb.uut.bank_read_data[2][0]
 @200
 -Bank 3
+@29
+top.tb.uut.gen_banks[3].bank.i_clk_enable
 @28
-top.tb.uut.control_signals[3].clk_en
 top.tb.uut.control_signals[3].write_en
 top.tb.uut.control_signals[3].read_en
 @22
