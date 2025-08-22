@@ -36,13 +36,12 @@ architecture RTL of MultiBankMemory is
     signal sel_d : std_ulogic_vector(1 downto 0);
 
     type t_clk_array is array(0 to BANK_COUNT-1) of std_ulogic;
-    signal clk_array : t_clk_array := (others => '0');
+    signal clk_enable : t_clk_array := (others => '0');
 
 begin
-
-    gen_clocks: for i in 0 to BANK_COUNT-1 generate
-        clk_array(i) <= i_clk and control_signals(i).clk_en and i_state(1);
-    end generate gen_clocks;
+    gen_clk_enable : for i in 0 to BANK_COUNT-1 generate 
+        clk_enable(i) <= control_signals(i).clk_en and i_state(1);
+    end generate gen_clk_enable;
 
     gen_banks: for i in 0 to BANK_COUNT-1 generate
         BANK : entity work.SingleBankMemory(RTL)
@@ -51,8 +50,9 @@ begin
                 MEM_DEPTH => MEM_DEPTH
             )
             port map (
-                i_clk => clk_array(i),
+                i_clk => i_clk,
                 i_nrst => i_nrst,
+                i_clk_enable => clk_enable(i),
                 i_state => i_state(0),
                 i_write_enable => control_signals(i).write_en,
                 i_read_enable => control_signals(i).read_en,

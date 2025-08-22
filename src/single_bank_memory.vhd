@@ -14,6 +14,7 @@ entity SingleBankMemory is
     port (
         i_clk : in std_ulogic;
         i_nrst : in std_ulogic;
+        i_clk_enable : in std_ulogic;
         i_state : in std_ulogic;
         i_write_enable : in std_ulogic;
         i_read_enable : in std_ulogic;
@@ -36,26 +37,28 @@ architecture RTL of SingleBankMemory is
                     MemoryArray <= (others => (others => '0'));
                     o_read_data <= (others => '0');
                 else 
-                    case (i_state) is 
-                        when '0' =>
-                            -- IDLE
-                            if(i_read_enable = '1') then 
-                                o_read_data <= MemoryArray(to_integer(unsigned(i_address)));
-                            end if;
-                        when '1' =>
-                            -- Active 
-                            if(i_read_enable = '1' and i_write_enable = '1') then 
-                                MemoryArray(to_integer(unsigned(i_address))) <= i_write_data;
-                                o_read_data <= MemoryArray(to_integer(unsigned(i_address)));
-                                --o_read_data <= i_write_data;
-                            elsif(i_read_enable = '1' and i_write_enable = '0') then 
-                                o_read_data <= MemoryArray(to_integer(unsigned(i_address)));
-                            elsif(i_read_enable = '0' and i_write_enable = '1') then 
-                                MemoryArray(to_integer(unsigned(i_address))) <= i_write_data;
-                            end if;
-                        when others => 
-                            null;
-                    end case;
+                    if(i_clk_enable = '1') then
+                        case (i_state) is 
+                            when '0' =>
+                                -- IDLE
+                                if(i_read_enable = '1') then 
+                                    o_read_data <= MemoryArray(to_integer(unsigned(i_address)));
+                                end if;
+                            when '1' =>
+                                -- Active 
+                                if(i_read_enable = '1' and i_write_enable = '1') then 
+                                    MemoryArray(to_integer(unsigned(i_address))) <= i_write_data;
+                                    o_read_data <= MemoryArray(to_integer(unsigned(i_address)));
+                                    --o_read_data <= i_write_data;
+                                elsif(i_read_enable = '1' and i_write_enable = '0') then 
+                                    o_read_data <= MemoryArray(to_integer(unsigned(i_address)));
+                                elsif(i_read_enable = '0' and i_write_enable = '1') then 
+                                    MemoryArray(to_integer(unsigned(i_address))) <= i_write_data;
+                                end if;
+                            when others => 
+                                null;
+                        end case;
+                    end if;
                 end if;
             end if;             
         end process proc_mem_access;
