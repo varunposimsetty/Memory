@@ -22,7 +22,7 @@ ghdl -m --workdir=$WORK_DIR tb
 # running the simulation
 ghdl -r --workdir="$WORK_DIR" tb --wave="$WORK_DIR/$WAVE_FILE" --vcd="$WORK_DIR/$VCD_FILE" --stop-time=1ms
 
-"$PY" ./vcd2saif.py -i "$WORK_DIR/$VCD_FILE" -d "$WORK_DIR/$SAIF_FILE"
+python3 ./vcd_automation.py -i "$WORK_DIR/$VCD_FILE" --vdd 1.2 --ceff 2e-15
 
 #python3 ./vcd2saif.py "$WORK_DIR/$VCD_FILE" "$WORK_DIR/${VCD_FILE%.vcd}.saif"
 
