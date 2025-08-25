@@ -7,7 +7,7 @@ The design leverages **bank-level clock gating** and **state-based control** to 
 ## 📂 Repository Structure
 .
 ├── single_bank_memory.vhd # RTL of a single memory bank with states
-├── multi_bank_memory.vhd # Top-level multi-bank memory (4 banks)
+\n├── multi_bank_memory.vhd # Top-level multi-bank memory (4 banks)
 ├── tb_multi_bank_memory.vhd # Testbench (stimuli for all state combinations)
 ├── compSim.sh # Shell script: GHDL + VCD dump + Python analysis
 ├── vcd_automation.py # Python script: VCD parsing → SAIF + power analysis
