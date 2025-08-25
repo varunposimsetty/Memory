@@ -5,7 +5,18 @@ The design leverages **bank-level clock gating** and **state-based control** to 
 ---
 
 ## 📂 Repository Structure
+```bash 
+
+├── Images 
+    └── Image.png #Output waveform simulated in Xilinx Vivado
+    └── MultiMemoryBankOutput.png # Simulation waveform (multi-bank)
+    └── SingleMemoryBankOutput.png # Simulation waveform (single-bank)
+├── sim 
+    └── work 
+
+
 .
+
 ├── single_bank_memory.vhd # RTL of a single memory bank with states
 ├── multi_bank_memory.vhd # Top-level multi-bank memory (4 banks)
 ├── tb_multi_bank_memory.vhd # Testbench (stimuli for all state combinations)
@@ -17,6 +28,7 @@ The design leverages **bank-level clock gating** and **state-based control** to 
 ├── image.png # Output simulated on Xilinx Vivado
 └── switching_activity.csv # Toggle + power stats (generated)
 ---
+```
 
 ## 🖥️ Design Overview
 
@@ -42,6 +54,7 @@ Run simulation with:
 
 ```bash
 ./compSim.sh
+```
 
 This script:
 
@@ -64,6 +77,17 @@ switching_activity.csv (toggle + dwell + hamming)
 Power estimation summary in terminal.
 
 Opens GTKWave for interactive viewing.
+
+
+#Power Analysis Methodology
+- VCD Parsing 
+- SAIF Generation
+- Power Estimation 
+
+#Outputs 
+![Single Memory Output](Images/SingleMemoryBankOutput.png)
+![Multi Memory Banks Output](Images/MultiMemoryBankOutput.png)
+- Vivado RTL Schematic : See (sim/schematic.pdf)
 
 Example Outputs
 Toggle Activity Summary
@@ -90,6 +114,8 @@ tb.uut.gen_banks(0).bank.i_clk            5.76e-07      5.76e-10
 tb.uut.i_write_data[31:0]                 1.13e-09      1.13e-12
 tb.uut.o_read_data[31:0]                  6.91e-10      6.91e-13
 
-#Outputs 
-![Single Memory Output](Images/SingleMemoryBankOutput.png)
-![Multi Memory Banks Output](Images/MultiMemoryBankOutput.png)
+
+#References 
+- VCD file analysis orignially from : https://github.com/bfarnaghi/vcd-signal-tracker/blob/main/vst.py
+- GHDL : https://github.com/ghdl/ghdl
+- GTKWave : https://github.com/gtkwave/gtkwave
