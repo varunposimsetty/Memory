@@ -16,7 +16,7 @@ The design leverages **bank-level clock gating** and **state-based control** to 
 └── SingleMemoryBankOutput.png # Simulation waveform (single-bank)
 └── image.png # Output simulated on Xilinx Vivado
 └── switching_activity.csv # Toggle + power stats (generated)
-
+`├──`
 ---
 
 ## 🖥️ Design Overview
