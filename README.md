@@ -6,28 +6,28 @@ The design leverages **bank-level clock gating** and **state-based control** to 
 
 ## 📂 Repository Structure
 ```bash 
-
 ├── Images 
-    └── Image.png #Output waveform simulated in Xilinx Vivado
-    └── MultiMemoryBankOutput.png # Simulation waveform (multi-bank)
-    └── SingleMemoryBankOutput.png # Simulation waveform (single-bank)
+|    └── Image.png #Output waveform simulated in Xilinx Vivado
+|    └── MultiMemoryBankOutput.png # Simulation waveform (multi-bank)
+|    └── SingleMemoryBankOutput.png # Simulation waveform (single-bank)
 ├── sim 
-    └── work 
-
-
-.
-
-├── single_bank_memory.vhd # RTL of a single memory bank with states
-├── multi_bank_memory.vhd # Top-level multi-bank memory (4 banks)
-├── tb_multi_bank_memory.vhd # Testbench (stimuli for all state combinations)
-├── compSim.sh # Shell script: GHDL + VCD dump + Python analysis
-├── vcd_automation.py # Python script: VCD parsing → SAIF + power analysis
-├── schematic.pdf # RTL schematic from Vivado synthesis
-├── MultiMemoryBankOutput.png # Simulation waveform (multi-bank)
-├── SingleMemoryBankOutput.png # Simulation waveform (single-bank)
-├── image.png # Output simulated on Xilinx Vivado
-└── switching_activity.csv # Toggle + power stats (generated)
----
+|    └── work 
+|    |    └── power_estimate_vcd.csv
+|    |    └── result.gtkw
+|    |    └── result.saif
+|    |    └── result.vcd
+|    |    └── switching_activity.csv
+|    |    └── switching_activity_vcd.csv
+|    |    └── vcd2saif.ipynb
+|    └── compSim.sh # Shell script: GHDL + VCD dump + Python analysis
+|    └── schematic.pdf
+|    └── schematic.sch
+|    └── tb_multi_bank_memory.vhd
+|    └── tb_single_bank_memory.vhd
+|    └── vcd_automation.py
+├── src
+    └── multi_bank_memory.vhd
+    └── single_bank_memory.vhd
 ```
 
 ## 🖥️ Design Overview
@@ -44,9 +44,9 @@ The design leverages **bank-level clock gating** and **state-based control** to 
 - Each bank has **clock enable**, **read enable**, and **write enable** signals derived from global inputs.  
 - Supports **fine-grained control**:
   - `"11"` → Active (read/write).  
-  - `"10"` → Write-only.  
-  - `"01"` → Read-only.  
-  - `"00"` → Idle (no operation).  
+  - `"10"` → Read-only.  
+  - `"01"` → no operation but data in memory banks are intact.  
+  - `"00"` → Idle (no operation - simulating power down) .  
 
 ## 🧪 Simulation Flow
 
@@ -79,12 +79,12 @@ Power estimation summary in terminal.
 Opens GTKWave for interactive viewing.
 
 
-#Power Analysis Methodology
+## Power Analysis Methodology
 - VCD Parsing 
 - SAIF Generation
 - Power Estimation 
 
-#Outputs 
+## Outputs 
 ![Single Memory Output](Images/SingleMemoryBankOutput.png)
 ![Multi Memory Banks Output](Images/MultiMemoryBankOutput.png)
 - Vivado RTL Schematic : See (sim/schematic.pdf)
@@ -115,7 +115,7 @@ tb.uut.i_write_data[31:0]                 1.13e-09      1.13e-12
 tb.uut.o_read_data[31:0]                  6.91e-10      6.91e-13
 
 
-#References 
-- VCD file analysis orignially from : https://github.com/bfarnaghi/vcd-signal-tracker/blob/main/vst.py
+## References 
+- VCD file analysis adapted from : https://github.com/bfarnaghi/vcd-signal-tracker/blob/main/vst.py
 - GHDL : https://github.com/ghdl/ghdl
 - GTKWave : https://github.com/gtkwave/gtkwave
