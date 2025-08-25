@@ -89,30 +89,30 @@ Opens GTKWave for interactive viewing.
 ![Multi Memory Banks Output](Images/MultiMemoryBankOutput.png)
 - Vivado RTL Schematic : See (sim/schematic.pdf)
 
-Example Outputs
-Toggle Activity Summary
-====== VCD ANALYSIS SUMMARY ======
-Signals         : 46
-Total Toggles   : 1,002,641
-Duration (s)    : 0.001
-Avg Toggle Rate : ~1.0e9 toggles/s (bit-level)
+### Example Outputs
+- Toggle Activity Summary
+- ====== VCD ANALYSIS SUMMARY ======
+- Signals         : 46
+- Total Toggles   : 1,002,641
+- Duration (s)    : 0.001
+- Avg Toggle Rate : ~1.0e9 toggles/s (bit-level)
 
-Top Toggling Signals:
-  tb.uut.i_clk                          → 200,000
-  tb.uut.gen_banks(0).bank.i_clk        → 200,000
-  tb.uut.gen_banks(1).bank.i_clk        → 200,000
-  tb.uut.gen_banks(2).bank.i_clk        → 200,000
-  tb.uut.gen_banks(3).bank.i_clk        → 200,000
+- Top Toggling Signals:
+-  tb.uut.i_clk                          → 200,000
+-  tb.uut.gen_banks(0).bank.i_clk        → 200,000
+-  tb.uut.gen_banks(1).bank.i_clk        → 200,000
+-  tb.uut.gen_banks(2).bank.i_clk        → 200,000
+-  tb.uut.gen_banks(3).bank.i_clk        → 200,000
 
-  Estimated Power (sample)
-====== ESTIMATED DYNAMIC POWER ======
-Assumptions: VDD = 1.2 V, Ceff = 2e-15 F per bit
+-  Estimated Power (sample)
+- ====== ESTIMATED DYNAMIC POWER ======
+- Assumptions: VDD = 1.2 V, Ceff = 2e-15 F per bit
 
-Signal                                    Power (W)     Energy (J)
-tb.uut.i_clk                              5.76e-07      5.76e-10
-tb.uut.gen_banks(0).bank.i_clk            5.76e-07      5.76e-10
-tb.uut.i_write_data[31:0]                 1.13e-09      1.13e-12
-tb.uut.o_read_data[31:0]                  6.91e-10      6.91e-13
+- Signal                                    Power (W)     Energy (J)
+- tb.uut.i_clk                              5.76e-07      5.76e-10
+- tb.uut.gen_banks(0).bank.i_clk            5.76e-07      5.76e-10
+- tb.uut.i_write_data[31:0]                 1.13e-09      1.13e-12
+- tb.uut.o_read_data[31:0]                  6.91e-10      6.91e-13
 
 
 ## References 
